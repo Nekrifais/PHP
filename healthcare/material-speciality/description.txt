@@ -1,0 +1,18 @@
+							<?php $current = get_query_var('paged'); ?>
+							<?php if($current == 0){ ?>
+								<?php if($query_metro_term != "" or $query_district_term != ""){
+									echo $textdescription; 
+									
+								} elseif($query_dop != "") {
+									
+									echo $textdescription;
+									
+								} else { 
+								
+									if($category_description) {
+										echo $category_description; 
+									} else {
+										echo $textdescription;
+									}
+								} ?>
+								<?php } ?>
