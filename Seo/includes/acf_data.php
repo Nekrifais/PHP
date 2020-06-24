@@ -1,0 +1,112 @@
+<?php 
+if( function_exists('acf_add_local_field_group') ):
+
+
+acf_add_local_field_group(array(
+	'key' => 'group_5d1a585a14c65',
+	'title' => 'Socialtech',
+	'fields' => array(
+		array(
+			'key' => 'field_5d1a584fe0324',
+			'label' => 'Задания',
+			'name' => 'tasks',
+			'type' => 'repeater',
+			'instructions' => '',
+			'required' => 0,
+			'conditional_logic' => 0,
+			'wrapper' => array(
+				'width' => '',
+				'class' => '',
+				'id' => '',
+			),
+			'collapsed' => '',
+			'min' => 1,
+			'max' => 0,
+			'layout' => 'block',
+			'button_label' => '',
+			'sub_fields' => array(
+				array(
+					'key' => 'field_5d1a622d7f02e',
+					'label' => 'Рубрика',
+					'name' => 'category',
+					'type' => 'taxonomy',
+					'instructions' => '',
+					'required' => 0,
+					'conditional_logic' => 0,
+					'wrapper' => array(
+						'width' => '',
+						'class' => '',
+						'id' => '',
+					),
+					'taxonomy' => 'category',
+					'field_type' => 'select',
+					'allow_null' => 0,
+					'add_term' => 0,
+					'save_terms' => 0,
+					'load_terms' => 0,
+					'return_format' => 'id',
+					'multiple' => 0,
+				),
+				array(
+					'key' => 'field_5d1a62487f02f',
+					'label' => 'Частота обновления (в днях)',
+					'name' => 'frequency',
+					'type' => 'range',
+					'instructions' => '',
+					'required' => 0,
+					'conditional_logic' => 0,
+					'wrapper' => array(
+						'width' => '33',
+						'class' => '',
+						'id' => '',
+					),
+					'default_value' => '',
+					'min' => '',
+					'max' => '',
+					'step' => '',
+					'prepend' => '',
+					'append' => '',
+				),
+				array(
+					'key' => 'field_5d1a62707f030',
+					'label' => 'Максимальный возраст записи в этой рубрике (в днях)',
+					'name' => 'days',
+					'type' => 'range',
+					'instructions' => '',
+					'required' => 0,
+					'conditional_logic' => 0,
+					'wrapper' => array(
+						'width' => '',
+						'class' => '',
+						'id' => '',
+					),
+					'default_value' => '',
+					'min' => '',
+					'max' => 365,
+					'step' => '',
+					'prepend' => '',
+					'append' => '',
+				),
+			),
+		),
+	),
+	'location' => array(
+		array(
+			array(
+				'param' => 'options_page',
+				'operator' => '==',
+				'value' => 'theme-general-settings',
+			),
+		),
+	),
+	'menu_order' => 0,
+	'position' => 'normal',
+	'style' => 'default',
+	'label_placement' => 'top',
+	'instruction_placement' => 'label',
+	'hide_on_screen' => '',
+	'active' => true,
+	'description' => '',
+));
+
+endif;
