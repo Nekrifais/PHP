@@ -4,7 +4,7 @@
 Шаги (подробнее в README.md рядом):
   urls     собрать ссылки на товары из карт сайта
   prepare  найти у товаров артикул, название и фото галереи (1024 px)
-  submit   отправить товары в Batch API (нужен ANTHROPIC_API_KEY)
+  submit   отправить товары в Batch API (нужен ключ в EXTRACT_API_KEY)
   status   показать, как идут пакеты
   results  забрать ответы, разобрать JSON, посчитать стоимость
 """
@@ -15,6 +15,7 @@ import csv
 import html
 import json
 import math
+import os
 import re
 import sys
 import time
@@ -98,6 +99,16 @@ def media_type(data):
     if data[:4] == b"GIF8":
         return "image/gif"
     return None
+
+
+def make_client():
+    # Отдельное имя переменной, чтобы ключ организации не подхватил сам Claude Code:
+    # ANTHROPIC_API_KEY он читает для своей работы.
+    import anthropic
+    key = os.environ.get("EXTRACT_API_KEY") or os.environ.get("ANTHROPIC_API_KEY")
+    if not key:
+        sys.exit("Нет ключа API: задайте переменную окружения EXTRACT_API_KEY (см. README.md).")
+    return anthropic.Anthropic(api_key=key)
 
 
 def cost(model, tokens_in, tokens_out):
@@ -238,8 +249,7 @@ def cmd_submit(args):
 
     client = None
     if not args.dry_run:
-        import anthropic
-        client = anthropic.Anthropic()
+        client = make_client()
 
     def send(chunk, size):
         if args.dry_run:
@@ -276,8 +286,7 @@ def cmd_submit(args):
 # ---------- status ----------
 
 def cmd_status(args):
-    import anthropic
-    client = anthropic.Anthropic()
+    client = make_client()
     batches = load_json(args.out / "batches.json", [])
     if not batches:
         print("Пакетов пока нет.")
@@ -302,8 +311,7 @@ def parse_json(text):
 
 
 def cmd_results(args):
-    import anthropic
-    client = anthropic.Anthropic()
+    client = make_client()
     products = {p["custom_id"]: p for p in load_jsonl(args.out / "products.jsonl")}
     batches_path = args.out / "batches.json"
     batches = load_json(batches_path, [])
